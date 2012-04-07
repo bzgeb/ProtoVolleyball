@@ -20,6 +20,8 @@ package
 
         public var kickHandler : KickHandler;
 
+        private var spriteCenter : FlxPoint;
+
         public function Player(state:FlxState, x:Number = 0, y:Number = 0)
         {
             super(x, y);
@@ -39,6 +41,8 @@ package
 
             kickKey = "S";
             state.add(leg);
+
+            spriteCenter = new FlxPoint();
         }
 
         override public function update():void
@@ -72,8 +76,8 @@ package
                 legAngle -= 3;
             }
 //            legAngle = FlxU.bound(legAngle, 90, 270);
-            var spriteCenter : FlxPoint;
-            spriteCenter = new FlxPoint((x + width / 2), (y + height / 2))
+            spriteCenter.x = (x + width / 2);
+            spriteCenter.y = (y + height / 2);
 
             var rLegAngle : Number;
             rLegAngle = legAngle * (Math.PI / 180);
