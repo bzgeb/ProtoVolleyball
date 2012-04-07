@@ -37,7 +37,7 @@ package
 
             // Load Level
             var data:Array = new Array(
-                1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+                1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
                 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
                 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -80,8 +80,7 @@ package
             for (var c:int = 0; c < players.length; ++c) {
                 players[c].update();
                 FlxG.collide(level, players[c]);
-                FlxG.collide(players[c], ball, onPlayerBallCollision);
-//                FlxG.collide(players[c].leg, ball);
+                FlxG.collide(players[c], ball);
                 players[c].footBallCollision = FlxG.collide(players[c].leg, ball);
             }
 
