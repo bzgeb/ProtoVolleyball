@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/2.6">
+<id>com.bronsonzgeb.kfvolleyball</id>
+
+<versionNumber>0.1.0</versionNumber>
+<versionLabel>0.1.0 Alpha 1</versionLabel>
+<filename>KFVolleyball</filename>
+<initialWindow>
+	<content>index.html</content>
+	<visible>true</visible>
+	<width>830</width>
+	<height>630</height>
+</initialWindow>
+</application>
