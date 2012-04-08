@@ -3,14 +3,16 @@ package
 	import org.flixel.*;
     import Player;
     import Ball;
+    import Scorekeeper;
 
 	public class PlayState extends FlxState
 	{
         private var ball : Ball;
-        private var startPos : Array = [FlxG.width / 2 - 50, FlxG.height - 60,
-                                        FlxG.width / 2 + 50, FlxG.height - 60]; 
+        private var startPos : Array = [FlxG.width / 2 - 100, FlxG.height - 60,
+                                        FlxG.width / 2 + 100, FlxG.height - 60]; 
         private var players : Vector.<Player>;
         private var level : FlxTilemap;
+        private var scorekeeper : Scorekeeper;
 
 		override public function create():void
 		{
@@ -22,8 +24,7 @@ package
             players.push(new Player(this, startPos[0], startPos[1]));
             players.push(new Player(this, startPos[2], startPos[3]));
 
-            players[0].setKeys("A", "D", "W");
-//            players[1].setKeys(FlxG.keys.LEFT, FlxG.keys.RIGHT, FlxG.keys.UP);
+            players[0].setKeys("A", "D", "W", "Q", "E", "S");
 
             add(players[0]);
             add(players[1]);
@@ -71,6 +72,9 @@ package
             level = new FlxTilemap();
             level.loadMap(FlxTilemap.arrayToCSV(data,40), FlxTilemap.ImgAuto, 0, 0, FlxTilemap.AUTO);
             add(level);
+
+            // init scorekeeper
+            scorekeeper = new Scorekeeper();
 		}
 
         override public function update():void
@@ -81,19 +85,23 @@ package
                 players[c].update();
                 FlxG.collide(level, players[c]);
                 FlxG.collide(players[c], ball);
-                players[c].footBallCollision = FlxG.collide(players[c].leg, ball);
             }
 
             if (FlxG.keys.justPressed("R")) {
                 ball.y -= 50;
             }
 
-            FlxG.collide(level, ball);
+            FlxG.collide(ball, level,  onBallLevelCollision);
         }
 
         public function onPlayerBallCollision(player:Player, ball:Ball):void
         {
             FlxG.log("Collision");
+        }
+
+        public function onBallLevelCollision(ball:Ball, level:FlxObject):void
+        {
+            scorekeeper.score(Scorekeeper.LEFT, 1);
         }
 	}
 }
