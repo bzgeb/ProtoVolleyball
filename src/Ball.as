@@ -11,7 +11,8 @@ package
             maxVelocity.x = 300;
             maxVelocity.y = 300;
             acceleration.y = 200;
-            drag.x = 100;
+            drag.x = 200;
+            drag.y = 200;
         }
 
     }
