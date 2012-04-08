@@ -36,10 +36,6 @@ package
             leg.makeGraphic(2, 2, 0xffff0000);
             legAngle = 270;
  
-            rotateKey = "E";
-            reverseRotateKey = "Q";
-
-            kickKey = "S";
             state.add(leg);
 
             spriteCenter = new FlxPoint();
@@ -59,15 +55,6 @@ package
                 velocity.y = -maxVelocity.y / 2;
             }
 
-            if (kickHandler != null) {
-                if (FlxG.keys.justPressed(kickKey)) {
-                    if (footBallCollision) {
-                        leg.color = 0xff000000;        
-                        kickHandler.kick(legAngle, 5);
-                    }
-                }
-            }
-
             if (FlxG.keys.pressed(rotateKey)) {
                 legAngle += 3;
             }
@@ -84,14 +71,26 @@ package
             leg.x = 15 * Math.cos(rLegAngle) + spriteCenter.x;
             leg.y = 15 * Math.sin(rLegAngle) + spriteCenter.y;
 
+            if (kickHandler != null) {
+                if (FlxG.keys.justPressed(kickKey)) {
+                    if(kickHandler.check(leg)) {
+                        kickHandler.kick(legAngle, 5);
+                        leg.color = 0xff000000;        
+                    }
+                }
+            }
+
             super.update();
         }
 
-        public function setKeys(left:String = "LEFT", right:String = "RIGHT", jump:String = "UP"):void
+        public function setKeys(left:String = "LEFT", right:String = "RIGHT", jump:String = "UP", rotate:String = "N", reverseRotate:String = "M", kick:String = "DOWN"):void
         {
            leftKey = left;
            rightKey = right;
            jumpKey = jump;
+           kickKey = kick;
+           rotateKey = rotate;
+           reverseRotateKey = reverseRotate;
         }
     }
 }
