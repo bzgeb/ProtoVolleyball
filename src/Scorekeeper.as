@@ -1,4 +1,6 @@
-package {
+package 
+{
+    import org.flixel.*;
     public class Scorekeeper
     {
         private var leftScore : Number;
@@ -19,6 +21,7 @@ package {
         public function score(side:Number, delta:int):void
         {
             scores[side] += delta;
+            FlxG.log("Score 0: " + scores[LEFT] + " Score 1: " + scores[RIGHT]);
         }
     }
 }

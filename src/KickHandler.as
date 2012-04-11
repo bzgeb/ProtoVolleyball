@@ -18,7 +18,7 @@ package {
             ball.velocity.y = ball.y * Math.sin(rAngle) * power;
         }
 
-        public function check(foot:FlxObject):Boolean
+        public function check(foot:FlxBasic):Boolean
         {
             return ball.overlaps(foot);
         }

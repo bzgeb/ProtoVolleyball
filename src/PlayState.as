@@ -8,15 +8,16 @@ package
 	public class PlayState extends FlxState
 	{
         private var ball : Ball;
-        private var startPos : Array = [FlxG.width / 2 - 100, FlxG.height - 60,
-                                        FlxG.width / 2 + 100, FlxG.height - 60]; 
+        private var startPos : Array = [FlxG.width / 2 - 120, FlxG.height - 60,
+                                        FlxG.width / 2 + 120, FlxG.height - 60,
+                                        FlxG.width / 2 + 2, FlxG.height - 38]; 
         private var players : Vector.<Player>;
         private var level : FlxTilemap;
         private var scorekeeper : Scorekeeper;
+        private var net : Net;
 
 		override public function create():void
 		{
-            FlxG.debug = true;
             FlxG.bgColor = 0xffff11aa;
 
             // Load Player
@@ -75,7 +76,21 @@ package
 
             // init scorekeeper
             scorekeeper = new Scorekeeper();
+
+            // load the net
+            net = new Net(startPos[4], startPos[5]);
+            add(net);
 		}
+
+        private function restart():void
+        {
+                players[0].x = startPos[0];
+                players[0].y = startPos[1];
+                players[1].x = startPos[2];
+                players[1].y = startPos[3];
+                ball.x = startPos[0];
+                ball.y = 0;
+        }
 
         override public function update():void
         {
@@ -85,23 +100,30 @@ package
                 players[c].update();
                 FlxG.collide(level, players[c]);
                 FlxG.collide(players[c], ball);
+                FlxG.collide(players[c], net);
             }
 
-            if (FlxG.keys.justPressed("R")) {
+            if (FlxG.keys.justPressed("U")) {
                 ball.y -= 50;
+            }
+            if (FlxG.keys.justPressed("R")) {
+                restart();
             }
 
             FlxG.collide(ball, level,  onBallLevelCollision);
-        }
-
-        public function onPlayerBallCollision(player:Player, ball:Ball):void
-        {
-            FlxG.log("Collision");
+            FlxG.collide(ball, net);
         }
 
         public function onBallLevelCollision(ball:Ball, level:FlxObject):void
         {
-            scorekeeper.score(Scorekeeper.LEFT, 1);
+            if (ball.justTouched(FlxObject.FLOOR)) {
+                if (ball.x + (ball.width / 2) < FlxG.width / 2) {
+                    scorekeeper.score(Scorekeeper.LEFT, 1);
+                }
+                else {
+                    scorekeeper.score(Scorekeeper.RIGHT, 1);
+                }
+            }
         }
 	}
 }

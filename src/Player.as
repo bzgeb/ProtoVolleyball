@@ -14,7 +14,10 @@ package
 
         private var kickKey : String;
 
+        public var thigh : FlxSprite;
         public var leg : FlxSprite;
+        public var foot: FlxSprite;
+
         public var footBallCollision : Boolean;
         private var legAngle : Number;
 
@@ -33,10 +36,18 @@ package
             setKeys();
 
             leg = new FlxSprite(x, y);
-            leg.makeGraphic(2, 2, 0xffff0000);
+            leg.makeGraphic(2, 2, 0xff000000);
             legAngle = 270;
+
+            foot = new FlxSprite(x, y);
+            foot.makeGraphic(2, 2, 0xff000000);
  
+            thigh = new FlxSprite(x, y);
+            thigh.makeGraphic(2, 2, 0xff000000);
+
             state.add(leg);
+            state.add(foot);
+            state.add(thigh);
 
             spriteCenter = new FlxPoint();
         }
@@ -68,12 +79,24 @@ package
 
             var rLegAngle : Number;
             rLegAngle = legAngle * (Math.PI / 180);
-            leg.x = 15 * Math.cos(rLegAngle) + spriteCenter.x;
-            leg.y = 15 * Math.sin(rLegAngle) + spriteCenter.y;
+            leg.x = 10 * Math.cos(rLegAngle) + spriteCenter.x;
+            leg.y = 10 * Math.sin(rLegAngle) + spriteCenter.y;
+
+            thigh.x = 5 * Math.cos(rLegAngle) + spriteCenter.x;
+            thigh.y = 5 * Math.sin(rLegAngle) + spriteCenter.y;
+
+            foot.x = 15 * Math.cos(rLegAngle) + spriteCenter.x;
+            foot.y = 15 * Math.sin(rLegAngle) + spriteCenter.y;
 
             if (kickHandler != null) {
+                var legGroup : FlxGroup = new FlxGroup();
+
+                legGroup.add(leg);
+                legGroup.add(thigh);
+                legGroup.add(foot);
+
                 if (FlxG.keys.justPressed(kickKey)) {
-                    if(kickHandler.check(leg)) {
+                    if(kickHandler.check(legGroup)) {
                         kickHandler.kick(legAngle, 5);
                         leg.color = 0xff000000;        
                     }

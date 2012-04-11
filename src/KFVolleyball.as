@@ -9,6 +9,7 @@ package
 		public function KFVolleyball()
 		{
 			super(320,240,MenuState,2);
+            FlxG.debug = true;
 		}
 	}
 }
