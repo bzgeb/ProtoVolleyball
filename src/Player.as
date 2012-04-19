@@ -55,10 +55,10 @@ package
         override public function update():void
         {
             acceleration.x = 0;
-            if (FlxG.keys.pressed(leftKey)) {
+            if (FlxG.keys.pressed(leftKey) && isTouching(FlxObject.FLOOR)) {
                 acceleration.x = -maxVelocity.x * 4;
             }
-            if (FlxG.keys.pressed(rightKey)) {
+            if (FlxG.keys.pressed(rightKey) && isTouching(FlxObject.FLOOR)) {
                 acceleration.x = maxVelocity.x * 4;
             }
 
